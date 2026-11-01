@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXTASIS — Drop 03: Rastro Rojo</title>
+  <meta name="description" content="EXTASIS: ropa urbana en ediciones limitadas. Drop 03: Rastro Rojo, pocas unidades y tiempo limitado. Proyecto académico.">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+
+  <!-- Fuentes Anton e Inter alojadas en assets/fonts (se declaran con @font-face en style.css):
+       la página no depende de internet para verse con su tipografía. -->
+  <link rel="stylesheet" href="style.css">
+  <!-- defer: el script se ejecuta cuando el HTML ya está cargado -->
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- Enlace para usuarios de teclado: salta directamente al contenido -->
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===================== ENCABEZADO ===================== -->
+  <header class="site-header">
+
+    <!-- Barra de anuncio: estado del drop (el JS escribe el tiempo restante) -->
+    <div class="anuncio">
+      <p class="anuncio__texto">
+        <span class="anuncio__etiqueta">Drop 03</span>
+        <span data-anuncio>Cierra el 31 de diciembre a las 11:59 p. m.</span>
+      </p>
+    </div>
+
+    <div class="site-header__inner container">
+      <a class="logo" href="#inicio" aria-label="EXTASIS, ir al inicio">
+        <img class="logo__icono" src="assets/images/logo.svg" alt="" width="40" height="32">
+        <span class="logo__texto">EXTASIS</span>
+      </a>
+
+      <!-- Navegación principal. En móvil se oculta tras el botón hamburguesa. -->
+      <nav class="nav" aria-label="Principal">
+        <ul class="nav__lista" id="menu-principal">
+          <li><a class="nav__enlace" href="#drop">Drop</a></li>
+          <li><a class="nav__enlace" href="#como-funciona">Cómo funciona</a></li>
+          <li><a class="nav__enlace" href="#faq">FAQ</a></li>
+          <li><a class="nav__enlace" href="#suscripcion">Suscríbete</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__acciones">
+        <!-- Botón del carrito: abre el panel lateral -->
+        <button class="btn-icono carrito-toggle" type="button" aria-controls="carrito" aria-expanded="false">
+          <svg class="btn-icono__svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 7h12l-1 13H7L6 7Zm3 0a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span class="sr-only">Abrir carrito,</span>
+          <span class="carrito-toggle__contador" data-contador-carrito>0</span>
+          <span class="sr-only">productos</span>
+        </button>
+
+        <!-- Botón hamburguesa: solo visible en pantallas pequeñas -->
+        <button class="btn-icono nav-toggle" type="button" aria-controls="menu-principal" aria-expanded="false">
+          <span class="nav-toggle__barras" aria-hidden="true"></span>
+          <span class="sr-only">Menú</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+      <div class="hero__inner container">
+        <div class="hero__texto">
+          <p class="eyebrow">EXTASIS presenta</p>
+          <h1 class="hero__titulo" id="hero-titulo">Drop 03: Rastro Rojo</h1>
+          <p class="hero__lema">Atrápalo antes de que desaparezca.</p>
+          <p class="hero__descripcion">Ocho diseños, pocas unidades y un solo plazo. Cuando se acaban, no vuelven.</p>
+
+          <!-- Contador regresivo. role="timer" no anuncia cada segundo al lector de pantalla. -->
+          <div class="contador" role="timer" aria-labelledby="contador-titulo" data-contador>
+            <p class="contador__titulo" id="contador-titulo">El drop cierra en</p>
+            <div class="contador__unidades">
+              <p class="contador__unidad"><span class="contador__numero" data-unidad="dias">--</span> <span class="contador__etiqueta">días</span></p>
+              <p class="contador__unidad"><span class="contador__numero" data-unidad="horas">--</span> <span class="contador__etiqueta">horas</span></p>
+              <p class="contador__unidad"><span class="contador__numero" data-unidad="minutos">--</span> <span class="contador__etiqueta">min</span></p>
+              <p class="contador__unidad"><span class="contador__numero" data-unidad="segundos">--</span> <span class="contador__etiqueta">seg</span></p>
+            </div>
+            <p class="contador__cerrado" data-contador-cerrado hidden>Drop cerrado. Suscríbete para el próximo lanzamiento.</p>
+          </div>
+
+          <a class="btn btn--primario" href="#drop">Ver el drop</a>
+        </div>
+
+        <div class="hero__mascota">
+          <!-- Extasis, la mascota de la tienda (SVG original creado para el proyecto) -->
+          <img src="assets/images/mascota/zorro-camino.svg" width="400" height="520"
+               alt="Extasis, la mascota de la tienda: un zorro rojo con hoodie negro y manos en el bolsillo, de pie en un camino nocturno con huellas rojas que llegan hasta él.">
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DROP (CATÁLOGO) ===================== -->
+    <section class="seccion" id="drop" aria-labelledby="drop-titulo">
+      <div class="container">
+        <header class="seccion__header">
+          <p class="eyebrow">Edición limitada</p>
+          <h2 class="seccion__titulo" id="drop-titulo">El drop</h2>
+          <p class="seccion__intro">Ocho piezas. Cuando el contador llega a cero o se acaban las unidades, desaparecen.</p>
+        </header>
+
+        <!-- Filtros por categoría. aria-pressed indica cuál está activo. -->
+        <div class="filtros" role="group" aria-label="Filtrar productos por categoría">
+          <button class="chip" type="button" data-filtro="todos" aria-pressed="true">Todos</button>
+          <button class="chip" type="button" data-filtro="camisetas" aria-pressed="false">Camisetas</button>
+          <button class="chip" type="button" data-filtro="hoodies" aria-pressed="false">Hoodies</button>
+          <button class="chip" type="button" data-filtro="accesorios" aria-pressed="false">Accesorios</button>
+        </div>
+
+        <!--
+          Cada producto guarda sus datos en atributos data-*.
+          JavaScript los lee con element.dataset (por ejemplo, dataset.precio).
+          data-tallas="si" indica que el producto exige elegir talla.
+        -->
+        <ul class="productos" role="list">
+
+          <li class="productos__item" data-categoria="camisetas">
+            <article class="producto" data-id="camiseta-rastro" data-nombre="Camiseta Rastro" data-precio="89000" data-stock="12" data-tallas="si" data-img="assets/images/productos/camiseta-rastro.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/camiseta-rastro.svg" width="400" height="400" loading="lazy"
+                     alt="Camiseta negra con la frase «Sigue el rastro» y un camino de huellas rojas de zorro en forma de S.">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Camisetas</p>
+                <h3 class="producto__nombre">Camiseta Rastro</h3>
+                <p class="producto__precio">$ 89.000</p>
+                <p class="producto__stock" data-stock-texto>Quedan 12 unidades</p>
+                <form class="producto__form" novalidate>
+                  <label class="producto__label" for="talla-camiseta-rastro">Talla</label>
+                  <select class="campo__control" id="talla-camiseta-rastro" name="talla" aria-describedby="talla-camiseta-rastro-error">
+                    <option value="">Elige tu talla</option>
+                    <option>S</option><option>M</option><option>L</option><option>XL</option>
+                  </select>
+                  <p class="campo__error" id="talla-camiseta-rastro-error" hidden></p>
+                  <button class="btn btn--primario btn--bloque" type="submit">Agregar al carrito</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+          <li class="productos__item" data-categoria="camisetas">
+            <article class="producto" data-id="camiseta-vulpes" data-nombre="Camiseta Vulpes Vulpes" data-precio="89000" data-stock="7" data-tallas="si" data-img="assets/images/productos/camiseta-vulpes.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/camiseta-vulpes.svg" width="400" height="400" loading="lazy"
+                     alt="Camiseta gris salvia con una insignia circular: la cabeza de Extasis y el texto «Vulpes vulpes» en arco.">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Camisetas</p>
+                <h3 class="producto__nombre">Camiseta Vulpes Vulpes</h3>
+                <p class="producto__precio">$ 89.000</p>
+                <p class="producto__stock" data-stock-texto>Quedan 7 unidades</p>
+                <form class="producto__form" novalidate>
+                  <label class="producto__label" for="talla-camiseta-vulpes">Talla</label>
+                  <select class="campo__control" id="talla-camiseta-vulpes" name="talla" aria-describedby="talla-camiseta-vulpes-error">
+                    <option value="">Elige tu talla</option>
+                    <option>S</option><option>M</option><option>L</option><option>XL</option>
+                  </select>
+                  <p class="campo__error" id="talla-camiseta-vulpes-error" hidden></p>
+                  <button class="btn btn--primario btn--bloque" type="submit">Agregar al carrito</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+          <li class="productos__item" data-categoria="camisetas">
+            <article class="producto" data-id="camiseta-mirada" data-nombre="Camiseta Mirada oversize" data-precio="109000" data-stock="4" data-tallas="si" data-img="assets/images/productos/camiseta-mirada.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/camiseta-mirada.svg" width="400" height="400" loading="lazy"
+                     alt="Camiseta negra oversize con la cara de Extasis formada solo por puntos rojos, morados y salvia.">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Camisetas</p>
+                <h3 class="producto__nombre">Camiseta Mirada oversize</h3>
+                <p class="producto__precio">$ 109.000</p>
+                <p class="producto__stock" data-stock-texto>Quedan 4 unidades</p>
+                <form class="producto__form" novalidate>
+                  <label class="producto__label" for="talla-camiseta-mirada">Talla</label>
+                  <select class="campo__control" id="talla-camiseta-mirada" name="talla" aria-describedby="talla-camiseta-mirada-error">
+                    <option value="">Elige tu talla</option>
+                    <option>S</option><option>M</option><option>L</option><option>XL</option>
+                  </select>
+                  <p class="campo__error" id="talla-camiseta-mirada-error" hidden></p>
+                  <button class="btn btn--primario btn--bloque" type="submit">Agregar al carrito</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+          <li class="productos__item" data-categoria="hoodies">
+            <article class="producto" data-id="hoodie-noche-de-ruta" data-nombre="Hoodie Noche de Ruta bordado" data-precio="229000" data-stock="3" data-tallas="si" data-img="assets/images/productos/hoodie-noche-de-ruta.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/hoodie-noche-de-ruta.svg" width="400" height="400" loading="lazy"
+                     alt="Hoodie negro con un zorro sentado en una colina frente a la luna y el texto «Noche de ruta».">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Hoodies</p>
+                <h3 class="producto__nombre">Hoodie Noche de Ruta bordado</h3>
+                <p class="producto__precio">$ 229.000</p>
+                <p class="producto__stock" data-stock-texto>Quedan 3 unidades</p>
+                <form class="producto__form" novalidate>
+                  <label class="producto__label" for="talla-hoodie-noche-de-ruta">Talla</label>
+                  <select class="campo__control" id="talla-hoodie-noche-de-ruta" name="talla" aria-describedby="talla-hoodie-noche-de-ruta-error">
+                    <option value="">Elige tu talla</option>
+                    <option>S</option><option>M</option><option>L</option><option>XL</option>
+                  </select>
+                  <p class="campo__error" id="talla-hoodie-noche-de-ruta-error" hidden></p>
+                  <button class="btn btn--primario btn--bloque" type="submit">Agregar al carrito</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+          <li class="productos__item" data-categoria="hoodies">
+            <article class="producto" data-id="hoodie-cruce" data-nombre="Hoodie Cruce con cremallera" data-precio="249000" data-stock="0" data-tallas="si" data-img="assets/images/productos/hoodie-cruce.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/hoodie-cruce.svg" width="400" height="400" loading="lazy"
+                     alt="Hoodie gris oscuro con cremallera, una señal de tránsito de cruce de zorros en el pecho y una franja roja en la manga.">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Hoodies</p>
+                <h3 class="producto__nombre">Hoodie Cruce con cremallera</h3>
+                <p class="producto__precio">$ 249.000</p>
+                <p class="producto__stock" data-stock-texto>Agotado</p>
+                <form class="producto__form" novalidate>
+                  <label class="producto__label" for="talla-hoodie-cruce">Talla</label>
+                  <select class="campo__control" id="talla-hoodie-cruce" name="talla" aria-describedby="talla-hoodie-cruce-error" disabled>
+                    <option value="">Elige tu talla</option>
+                    <option>S</option><option>M</option><option>L</option><option>XL</option>
+                  </select>
+                  <p class="campo__error" id="talla-hoodie-cruce-error" hidden></p>
+                  <button class="btn btn--primario btn--bloque" type="submit" disabled>Agotado</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+          <li class="productos__item" data-categoria="accesorios">
+            <article class="producto" data-id="gorra-senal" data-nombre="Gorra Señal" data-precio="69000" data-stock="10" data-tallas="no" data-img="assets/images/productos/gorra-senal.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/gorra-senal.svg" width="400" height="400" loading="lazy"
+                     alt="Gorra negra con un parche bordado en forma de señal de tránsito de cruce de zorros.">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Accesorios</p>
+                <h3 class="producto__nombre">Gorra Señal</h3>
+                <p class="producto__precio">$ 69.000</p>
+                <p class="producto__stock" data-stock-texto>Quedan 10 unidades</p>
+                <form class="producto__form" novalidate>
+                  <p class="producto__talla-unica">Talla única</p>
+                  <button class="btn btn--primario btn--bloque" type="submit">Agregar al carrito</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+          <li class="productos__item" data-categoria="accesorios">
+            <article class="producto" data-id="tote-mapa" data-nombre="Tote Mapa" data-precio="59000" data-stock="15" data-tallas="no" data-img="assets/images/productos/tote-mapa.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/tote-mapa.svg" width="400" height="400" loading="lazy"
+                     alt="Bolso de lona salvia con un mapa topográfico, una ruta punteada roja que termina en una X y el texto «Ruta 03».">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Accesorios</p>
+                <h3 class="producto__nombre">Tote Mapa</h3>
+                <p class="producto__precio">$ 59.000</p>
+                <p class="producto__stock" data-stock-texto>Quedan 15 unidades</p>
+                <form class="producto__form" novalidate>
+                  <p class="producto__talla-unica">Talla única</p>
+                  <button class="btn btn--primario btn--bloque" type="submit">Agregar al carrito</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+          <li class="productos__item" data-categoria="accesorios">
+            <article class="producto" data-id="pack-stickers" data-nombre="Pack stickers + pin" data-precio="29000" data-stock="25" data-tallas="no" data-img="assets/images/productos/pack-stickers.svg">
+              <div class="producto__media">
+                <img src="assets/images/productos/pack-stickers.svg" width="400" height="400" loading="lazy"
+                     alt="Stickers con la cabeza de Extasis, una huella y una señal de cruce de zorros, más un pin esmaltado de Extasis sonriendo.">
+              </div>
+              <div class="producto__cuerpo">
+                <p class="insignia">Accesorios</p>
+                <h3 class="producto__nombre">Pack stickers + pin</h3>
+                <p class="producto__precio">$ 29.000</p>
+                <p class="producto__stock" data-stock-texto>Quedan 25 unidades</p>
+                <form class="producto__form" novalidate>
+                  <p class="producto__talla-unica">Talla única</p>
+                  <button class="btn btn--primario btn--bloque" type="submit">Agregar al carrito</button>
+                </form>
+              </div>
+            </article>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== CÓMO FUNCIONA ===================== -->
+    <section class="seccion seccion--alterna" id="como-funciona" aria-labelledby="como-titulo">
+      <div class="container">
+        <header class="seccion__header">
+          <p class="eyebrow">Cómo funciona</p>
+          <h2 class="seccion__titulo" id="como-titulo">Tres pasos, cero repeticiones</h2>
+          <p class="seccion__intro">Un drop es una colección que sale una sola vez, con fecha de cierre y pocas unidades.</p>
+        </header>
+
+        <!-- Lista ordenada: el orden de los pasos importa -->
+        <ol class="pasos" role="list">
+          <li class="paso">
+            <span class="paso__numero" aria-hidden="true">1</span>
+            <h3 class="paso__titulo">Suscríbete</h3>
+            <p class="paso__texto">Deja tu correo y te avisamos antes de cada lanzamiento.</p>
+            <a class="btn btn--secundario" href="#suscripcion">Suscribirme</a>
+          </li>
+          <li class="paso">
+            <span class="paso__numero" aria-hidden="true">2</span>
+            <h3 class="paso__titulo">Entra al lanzamiento</h3>
+            <p class="paso__texto">El drop abre con fecha fija. El contador te dice cuánto tiempo queda.</p>
+          </li>
+          <li class="paso">
+            <span class="paso__numero" aria-hidden="true">3</span>
+            <h3 class="paso__titulo">Atrápalo</h3>
+            <p class="paso__texto">Cada diseño tiene pocas unidades. Cuando se agota, no se vuelve a fabricar.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== SUSCRIPCIÓN ===================== -->
+    <section class="seccion" id="suscripcion" aria-labelledby="suscripcion-titulo">
+      <div class="container suscripcion">
+        <header class="seccion__header suscripcion__texto">
+          <p class="eyebrow">Próximo drop</p>
+          <h2 class="seccion__titulo" id="suscripcion-titulo">Que no te lo cuenten</h2>
+          <p class="seccion__intro">Suscríbete y recibe el aviso del próximo drop antes que nadie.</p>
+          <p class="nota">Proyecto académico: no se envían correos reales.</p>
+        </header>
+
+        <!-- novalidate: desactiva los globos del navegador para mostrar mensajes propios -->
+        <form class="formulario" id="form-suscripcion" novalidate>
+          <div class="formulario__fila">
+            <div class="campo">
+              <label class="campo__label" for="sus-nombre">Nombre</label>
+              <input class="campo__control" id="sus-nombre" name="nombre" type="text" autocomplete="given-name" required aria-describedby="sus-nombre-error">
+              <p class="campo__error" id="sus-nombre-error" hidden></p>
+            </div>
+            <div class="campo">
+              <label class="campo__label" for="sus-correo">Correo electrónico</label>
+              <input class="campo__control" id="sus-correo" name="correo" type="email" autocomplete="email" required aria-describedby="sus-correo-error">
+              <p class="campo__error" id="sus-correo-error" hidden></p>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label class="campo__label" for="sus-talla">Talla preferida</label>
+            <select class="campo__control" id="sus-talla" name="talla" required aria-describedby="sus-talla-error">
+              <option value="">Elige una talla</option>
+              <option>S</option><option>M</option><option>L</option><option>XL</option>
+            </select>
+            <p class="campo__error" id="sus-talla-error" hidden></p>
+          </div>
+
+          <div class="campo campo--check">
+            <input class="campo__check" id="sus-acepto" name="acepto" type="checkbox" required aria-describedby="sus-acepto-error">
+            <label for="sus-acepto">Acepto recibir avisos de nuevos drops.</label>
+            <p class="campo__error" id="sus-acepto-error" hidden></p>
+          </div>
+
+          <button class="btn btn--primario" type="submit">Suscribirme</button>
+
+          <!-- Región de estado: el lector de pantalla anuncia los cambios de este texto -->
+          <p class="formulario__estado" role="status" data-estado></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== PREGUNTAS FRECUENTES ===================== -->
+    <section class="seccion seccion--alterna" id="faq" aria-labelledby="faq-titulo">
+      <div class="container container--estrecho">
+        <header class="seccion__header">
+          <p class="eyebrow">Dudas</p>
+          <h2 class="seccion__titulo" id="faq-titulo">Preguntas frecuentes</h2>
+        </header>
+
+        <!-- details/summary: acordeón nativo de HTML, accesible y sin JavaScript -->
+        <div class="faq">
+          <details class="faq__item">
+            <summary class="faq__pregunta">¿Qué es un drop?</summary>
+            <p class="faq__respuesta">Es una colección que se publica una sola vez, durante un tiempo limitado y con pocas unidades por diseño.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__pregunta">¿Vuelven las prendas agotadas?</summary>
+            <p class="faq__respuesta">No. Cada diseño se fabrica una sola vez. Si te suscribes, te avisamos del próximo drop.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__pregunta">¿Cómo elijo mi talla?</summary>
+            <p class="faq__respuesta">Las camisetas y hoodies van de S a XL con horma regular, salvo la Mirada, que es oversize. Si dudas entre dos tallas, elige la mayor.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__pregunta">¿Hacen envíos reales?</summary>
+            <p class="faq__respuesta">No. EXTASIS es un proyecto académico: los pedidos son de demostración, no se cobra nada y no se envía ningún producto.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PIE DE PÁGINA ===================== -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__marca">
+        <a class="logo" href="#inicio" aria-label="EXTASIS, volver al inicio">
+          <img class="logo__icono" src="assets/images/logo.svg" alt="" width="40" height="32">
+          <span class="logo__texto">EXTASIS</span>
+        </a>
+        <p>Ropa urbana en ediciones limitadas.</p>
+      </div>
+
+      <nav aria-label="Pie de página">
+        <ul class="site-footer__enlaces">
+          <li><a href="#drop">Drop</a></li>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#suscripcion">Suscríbete</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__creditos">
+        <p>Extasis, la mascota, y los estampados: diseños originales del proyecto, basados en la ilustración de Extasis por Dunce Dogs (comisión del autor).</p>
+        <p class="nota">Proyecto académico del taller «Creación de propuestas y maquetaciones web con IA». Productos, precios y pedidos son de demostración: no se procesan pagos.</p>
+        <p class="nota">© 2026 EXTASIS</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== PANEL DEL CARRITO ===================== -->
+  <!-- Fondo oscuro detrás del panel; un clic sobre él cierra el carrito -->
+  <div class="carrito-fondo" data-cerrar-carrito hidden></div>
+
+  <aside class="carrito" id="carrito" role="dialog" aria-modal="true" aria-labelledby="carrito-titulo" hidden>
+    <div class="carrito__header">
+      <h2 class="carrito__titulo" id="carrito-titulo">Tu carrito</h2>
+      <button class="btn-icono" type="button" data-cerrar-carrito>
+        <svg class="btn-icono__svg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="sr-only">Cerrar carrito</span>
+      </button>
+    </div>
+
+    <!-- Vista 1: lista de productos -->
+    <div class="carrito__vista" data-vista="lista">
+      <div class="carrito__vacio" data-carrito-vacio>
+        <img class="carrito__ilustracion" src="assets/images/mascota/zorro-durmiendo.svg" width="340" height="240" alt="">
+        <p>Tu carrito está vacío. Extasis está dormido hasta que agregues algo del drop.</p>
+      </div>
+      <ul class="carrito__lista" data-carrito-lista role="list"></ul>
+      <div class="carrito__resumen">
+        <p class="carrito__total">Total <strong data-carrito-total>$ 0</strong></p>
+        <button class="btn btn--primario btn--bloque" type="button" data-ir-pedido disabled>Finalizar pedido</button>
+      </div>
+    </div>
+
+    <!-- Vista 2: formulario de pedido de demostración -->
+    <div class="carrito__vista" data-vista="pedido" hidden>
+      <button class="btn-texto" type="button" data-volver-lista>← Volver al carrito</button>
+      <h3 class="carrito__subtitulo">Datos de envío</h3>
+      <p class="nota">Pedido de demostración: no se piden ni se procesan datos de pago.</p>
+
+      <form class="formulario" id="form-pedido" novalidate>
+        <div class="campo">
+          <label class="campo__label" for="ped-nombre">Nombre completo</label>
+          <input class="campo__control" id="ped-nombre" name="nombre" type="text" autocomplete="name" required aria-describedby="ped-nombre-error">
+          <p class="campo__error" id="ped-nombre-error" hidden></p>
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="ped-correo">Correo electrónico</label>
+          <input class="campo__control" id="ped-correo" name="correo" type="email" autocomplete="email" required aria-describedby="ped-correo-error">
+          <p class="campo__error" id="ped-correo-error" hidden></p>
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="ped-celular">Celular</label>
+          <input class="campo__control" id="ped-celular" name="celular" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="Ej.: 3001234567" required aria-describedby="ped-celular-error">
+          <p class="campo__error" id="ped-celular-error" hidden></p>
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="ped-ciudad">Ciudad</label>
+          <input class="campo__control" id="ped-ciudad" name="ciudad" type="text" autocomplete="address-level2" required aria-describedby="ped-ciudad-error">
+          <p class="campo__error" id="ped-ciudad-error" hidden></p>
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="ped-direccion">Dirección</label>
+          <input class="campo__control" id="ped-direccion" name="direccion" type="text" autocomplete="street-address" required aria-describedby="ped-direccion-error">
+          <p class="campo__error" id="ped-direccion-error" hidden></p>
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="ped-notas">Notas <span class="campo__opcional">(opcional)</span></label>
+          <textarea class="campo__control" id="ped-notas" name="notas" rows="3" maxlength="200"></textarea>
+        </div>
+
+        <p class="carrito__total">Total <strong data-pedido-total>$ 0</strong></p>
+        <button class="btn btn--primario btn--bloque" type="submit">Confirmar pedido de demostración</button>
+      </form>
+    </div>
+
+    <!-- Vista 3: confirmación -->
+    <div class="carrito__vista" data-vista="confirmacion" hidden>
+      <img class="carrito__ilustracion" src="assets/images/mascota/zorro-feliz.svg" width="240" height="230" alt="">
+      <h3 class="carrito__subtitulo">Pedido de demostración registrado</h3>
+      <p class="mensaje mensaje--exito" data-confirmacion tabindex="-1"></p>
+      <button class="btn btn--secundario btn--bloque" type="button" data-cerrar-carrito>Seguir viendo el drop</button>
+    </div>
+  </aside>
+
+  <!-- Aviso breve (toast) para confirmar acciones como "agregado al carrito" -->
+  <p class="aviso" role="status" data-aviso></p>
+
+</body>
+</html>
